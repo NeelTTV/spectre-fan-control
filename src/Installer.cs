@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace SpectreControl
 {
-    // Installation "un clic" :
-    //  - copie l'exe dans C:\Program Files\SpectreControl (modifiable seulement en admin)
-    //  - tâche "SpectreControl Apply" (SYSTEM) : réapplique le réglage au démarrage, à la connexion et en sortie de veille
-    //  - tâche "SpectreControl GUI" : ouvre l'appli en admin sans fenêtre UAC à chaque fois
-    //  - raccourcis Bureau + menu Démarrer (épinglables)
+    // One-click install:
+    //  - copies the exe to C:\Program Files\SpectreControl (writable by admins only)
+    //  - "SpectreControl Apply" task (SYSTEM): re-applies the setting at startup, sign-in and wake from sleep
+    //  - "SpectreControl GUI" task: opens the app as admin without a UAC prompt every time
+    //  - Desktop + Start menu shortcuts (pinnable)
     static class Installer
     {
         public const string ApplyTask = "SpectreControl Apply";
@@ -47,7 +47,7 @@ namespace SpectreControl
             return File.Exists(InstalledExe) && Run("schtasks.exe", "/query /tn \"" + ApplyTask + "\"") == 0;
         }
 
-        // Lance l'appli installée en admin via la tâche planifiée (pas d'UAC). Renvoie false si la tâche n'existe pas.
+        // Starts the installed app as admin through the scheduled task (no UAC). Returns false if the task does not exist.
         public static bool TryStartElevatedViaTask()
         {
             return File.Exists(InstalledExe) && Run("schtasks.exe", "/run /tn \"" + GuiTask + "\"") == 0;
@@ -59,7 +59,7 @@ namespace SpectreControl
             if (!IsRunningInstalled())
                 File.Copy(Application.ExecutablePath, InstalledExe, true);
 
-            // Restes de l'ancienne version PowerShell
+            // Leftovers from the old PowerShell version
             TryDelete(Path.Combine(InstallDir, "SpectreControl.ps1"));
             TryDelete(Path.Combine(Settings.Dir, "config.json"));
 
@@ -79,7 +79,7 @@ namespace SpectreControl
             TryDelete(StartMenuShortcut);
             try { Directory.Delete(Settings.Dir, true); } catch { }
 
-            // L'exe ne peut pas se supprimer lui-même pendant qu'il tourne : on laisse cmd le faire juste après
+            // The exe cannot delete itself while running: let cmd do it right after we exit
             ProcessStartInfo psi = new ProcessStartInfo("cmd.exe",
                 "/c ping 127.0.0.1 -n 3 > nul & rmdir /s /q \"" + InstallDir + "\"");
             psi.CreateNoWindow = true;
@@ -90,7 +90,7 @@ namespace SpectreControl
         static string ApplyTaskXml()
         {
             return TaskXml(
-                "Réapplique la vitesse des ventilateurs choisie dans Spectre Control.",
+                "Re-applies the fan speed chosen in Spectre Control.",
                 "<BootTrigger><Delay>PT20S</Delay></BootTrigger>" +
                 "<LogonTrigger><Delay>PT10S</Delay></LogonTrigger>" +
                 "<EventTrigger><Delay>PT5S</Delay><Subscription>" + SecurityElement.Escape(
@@ -103,7 +103,7 @@ namespace SpectreControl
 
         static string GuiTaskXml(string user)
         {
-            return TaskXml("Ouvre Spectre Control en administrateur.", "",
+            return TaskXml("Opens Spectre Control as administrator.", "",
                 "<UserId>" + SecurityElement.Escape(user) + "</UserId><LogonType>InteractiveToken</LogonType>",
                 "PT0S", "");
         }
@@ -145,7 +145,7 @@ namespace SpectreControl
             Type t = lnk.GetType();
             t.InvokeMember("TargetPath", BindingFlags.SetProperty, null, lnk, new object[] { InstalledExe });
             t.InvokeMember("WorkingDirectory", BindingFlags.SetProperty, null, lnk, new object[] { InstallDir });
-            t.InvokeMember("Description", BindingFlags.SetProperty, null, lnk, new object[] { "Vitesse des ventilateurs HP" });
+            t.InvokeMember("Description", BindingFlags.SetProperty, null, lnk, new object[] { "HP laptop fan control" });
             t.InvokeMember("Save", BindingFlags.InvokeMethod, null, lnk, null);
         }
 

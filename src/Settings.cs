@@ -9,7 +9,7 @@ namespace SpectreControl
 
     class Settings
     {
-        // Centaines de tr/min. Sous ~30 un ventilateur peut s'arrêter complètement.
+        // Hundreds of RPM. Below ~30 a fan may stop completely.
         public const int MinLevel = 30;
         public const int MaxLevel = 51;
 
@@ -21,7 +21,7 @@ namespace SpectreControl
         public int Fan1 = MaxLevel;
         public int Fan2 = MaxLevel;
         public bool CpuMax = true;
-        public string Language = Lang.SystemDefault();   // "fr" ou "en"
+        public string Language = Lang.Default;   // "en" or "fr"
 
         public static Settings Load()
         {
@@ -67,9 +67,9 @@ namespace SpectreControl
         public void ApplyCpu()
         {
             const string sub = "54533251-82be-4824-96c1-47b60b740d00";
-            const string boost = "be337238-0d82-4146-a960-4f3749d470c7";  // 2 = agressif
-            const string epp = "36687f9e-e3a5-4dbf-b1dc-15eb381c6863";    // 0 = performance max
-            const string cores = "0cc5b647-c1df-4637-891a-dec35c318583";  // % de coeurs jamais parqués
+            const string boost = "be337238-0d82-4146-a960-4f3749d470c7";  // 2 = aggressive
+            const string epp = "36687f9e-e3a5-4dbf-b1dc-15eb381c6863";    // 0 = max performance
+            const string cores = "0cc5b647-c1df-4637-891a-dec35c318583";  // % of cores never parked
             foreach (string s in new string[] { boost, epp, cores })
                 PowerCfg("-attributes " + sub + " " + s + " -ATTRIB_HIDE");
             PowerCfg("/setacvalueindex SCHEME_CURRENT " + sub + " " + boost + (CpuMax ? " 2" : " 1"));

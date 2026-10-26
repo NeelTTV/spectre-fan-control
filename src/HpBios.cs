@@ -4,15 +4,15 @@ using System.Text;
 
 namespace SpectreControl
 {
-    // Interface BIOS HP exposée par WMI (classe hpqBIntM, namespace root\wmi).
-    // Mêmes commandes que les PC HP Omen / Victus : commande 0x20008, le "type" choisit l'action.
+    // HP BIOS interface exposed through WMI (class hpqBIntM, namespace root\wmi).
+    // Same commands as HP Omen / Victus laptops: command 0x20008, the "type" selects the action.
     static class HpBios
     {
         const uint ThermalCommand = 0x20008;
 
         const uint GetFanCount = 0x10;
-        const uint GetFanLevel = 0x2D;   // vitesse actuelle, en centaines de tr/min, un octet par ventilateur
-        const uint SetFanLevel = 0x2E;   // vitesse fixe, même unité
+        const uint GetFanLevel = 0x2D;   // current speed, in hundreds of RPM, one byte per fan
+        const uint SetFanLevel = 0x2E;   // fixed speed, same unit
 
         public static byte[] Call(uint type, byte[] data, int outSize)
         {
@@ -55,7 +55,7 @@ namespace SpectreControl
             return new int[] { d.Length > 0 ? d[0] * 100 : 0, d.Length > 1 ? d[1] * 100 : 0 };
         }
 
-        // Niveaux en centaines de tr/min. Le BIOS garde ce régime jusqu'au redémarrage.
+        // Levels in hundreds of RPM. The BIOS keeps this speed until the next restart.
         public static void SetFanLevels(int fan1, int fan2)
         {
             Call(SetFanLevel, new byte[] { ToBiosLevel(fan1), ToBiosLevel(fan2), 0, 0 }, 0);
@@ -64,7 +64,7 @@ namespace SpectreControl
         static byte ToBiosLevel(int level)
         {
             level = Math.Max(Settings.MinLevel, Math.Min(Settings.MaxLevel, level));
-            // Au maximum on demande plus que le plafond matériel pour être sûr d'être à fond
+            // At maximum, ask for more than the hardware ceiling to be sure the fans run flat out
             return (byte)(level >= Settings.MaxLevel ? 60 : level);
         }
     }

@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 [assembly: AssemblyTitle("Spectre Control")]
 [assembly: AssemblyProduct("Spectre Control")]
-[assembly: AssemblyDescription("Contrôle des ventilateurs pour PC portables HP")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyDescription("Fan control for HP laptops")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 
 namespace SpectreControl
 {
@@ -29,7 +29,7 @@ namespace SpectreControl
 
             if (!Installer.IsAdmin())
             {
-                // Version installée : la tâche planifiée l'ouvre en admin sans UAC
+                // Installed copy: the scheduled task opens it as admin with no UAC prompt
                 if (Installer.IsRunningInstalled() && Installer.TryStartElevatedViaTask()) return 0;
                 try
                 {
@@ -98,7 +98,7 @@ namespace SpectreControl
             }
             else if (!Installer.IsInstalled())
             {
-                // Tâches supprimées à la main : on répare
+                // Tasks were deleted by hand: repair them
                 try { Installer.Install(); } catch { }
             }
 
@@ -115,16 +115,16 @@ namespace SpectreControl
             return 0;
         }
 
-        // Lancé par la tâche SYSTEM au démarrage, à la connexion et en sortie de veille
+        // Run by the SYSTEM task at startup, at sign-in and on wake from sleep
         static int ApplyAtStartup()
         {
             Settings s = Settings.Load();
             if (s.Mode == FanMode.Auto)
             {
-                Settings.Log("Mode=Auto, rien à faire");
+                Settings.Log("Mode=Auto, nothing to do");
                 return 0;
             }
-            // Juste après le démarrage l'interface WMI peut ne pas être prête
+            // Right after boot the WMI interface may not be ready yet
             for (int attempt = 1; attempt <= 6; attempt++)
             {
                 try
@@ -135,7 +135,7 @@ namespace SpectreControl
                 }
                 catch (Exception ex)
                 {
-                    if (attempt == 6) { Settings.Log("Échec : " + ex.Message); return 1; }
+                    if (attempt == 6) { Settings.Log("Failed: " + ex.Message); return 1; }
                     Thread.Sleep(5000);
                 }
             }

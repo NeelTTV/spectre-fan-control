@@ -4,125 +4,125 @@
 
 # Spectre Control
 
-**Contrôle les ventilateurs de ton PC portable HP, sans passer par myHP.**
+**Take control of your HP laptop's fans, without myHP.**
 
-Ventilateurs au maximum, réglage séparé pour chaque ventilateur, et ton choix est gardé au redémarrage.
+Max fan speed with full CPU performance, a separate speed for each fan, and your setting survives restarts.
 
-### [⬇️ Télécharger Spectre Control](https://github.com/NeelTTV/spectre-fan-control/releases/latest/download/SpectreControl.exe)
+### [⬇️ Download Spectre Control](https://github.com/NeelTTV/spectre-fan-control/releases/latest/download/SpectreControl.exe)
 
-*Windows 10 / 11 · 50 Ko · rien d'autre à installer · 🇫🇷 Français / 🇬🇧 English*
+*Windows 10 / 11 · 50 KB · nothing else to install · 🇬🇧 English / 🇫🇷 Français*
 
-<img src="docs/screenshot.png" width="420" alt="Fenêtre de Spectre Control">
+<img src="docs/screenshot.png" width="420" alt="Spectre Control window">
 
 </div>
 
 ---
 
-## Le problème
+## The problem
 
-Sur les HP Spectre récents, l'application **myHP** ne propose que trois modes, et aucun ne convient :
+On recent HP Spectre laptops, the **myHP** app only offers three modes, and none of them works well:
 
-| Mode myHP | Performances | Ventilateurs |
+| myHP mode | Performance | Fans |
 |---|---|---|
-| Smart Sense | 🐌 bridées | moyens |
-| Refroidissement | 🐌 bridées | ✅ forts |
-| Performance | ✅ bonnes… | ❌ faibles, donc le PC chauffe et finit par ralentir |
+| Smart Sense | 🐌 throttled | medium |
+| Cool | 🐌 throttled | ✅ strong |
+| Performance | ✅ good… | ❌ weak, so the laptop overheats and slows down anyway |
 
-**Spectre Control** permet d'avoir les deux à la fois : le processeur à fond **et** les ventilateurs à fond.
+**Spectre Control** gives you both at once: the CPU at full power **and** the fans at full speed.
 
-## Installation (2 minutes)
+## Install (2 minutes)
 
-1. **Télécharge** [SpectreControl.exe](https://github.com/NeelTTV/spectre-fan-control/releases/latest/download/SpectreControl.exe).
-2. **Double-clique** sur le fichier.
-   > Windows peut afficher **« Windows a protégé votre ordinateur »**. C'est normal pour une petite appli gratuite qui n'a pas de certificat payant.
-   > Clique sur **Informations complémentaires**, puis sur **Exécuter quand même**.
-3. Clique sur **Oui** dans la fenêtre de Windows (droits administrateur), puis sur **Oui** pour installer.
+1. **Download** [SpectreControl.exe](https://github.com/NeelTTV/spectre-fan-control/releases/latest/download/SpectreControl.exe).
+2. **Double-click** the file.
+   > Windows may show **"Windows protected your PC"**. That's normal for a small free app without a paid code-signing certificate.
+   > Click **More info**, then **Run anyway**.
+3. Click **Yes** in the Windows prompt (administrator rights), then **Yes** to install.
 
-C'est fini 🎉 L'appli est sur ton **Bureau** et dans le **menu Démarrer**. Tu peux l'**épingler à la barre des tâches** (clic droit sur l'icône → *Épingler à la barre des tâches*).
+Done 🎉 The app is on your **Desktop** and in the **Start menu**. You can **pin it to the taskbar** (right-click the icon → *Pin to taskbar*).
 
-## Utilisation
+## How to use it
 
-1. Dans myHP, choisis le mode **Performance** (une seule fois).
-2. Ouvre **Spectre Control** et choisis un mode :
-   - **Automatique** : la gestion HP d'origine.
-   - **Vitesse fixe** : les deux ventilateurs à la même vitesse. Les boutons *Silencieux*, *Équilibré* et *Maximum* règlent la vitesse en un clic.
-   - **Réglage séparé** : une vitesse différente pour chaque ventilateur.
-3. Laisse **Processeur en performances maximales** coché pour avoir toute la puissance.
-4. Clique sur **Appliquer et garder au redémarrage**.
+1. In myHP, pick the **Performance** mode (just once).
+2. Open **Spectre Control** and choose a mode:
+   - **Automatic**: HP's default fan control.
+   - **Fixed speed**: both fans at the same speed. The *Quiet*, *Balanced* and *Maximum* buttons set the speed in one click.
+   - **Separate speed for each fan**: a different speed for each fan.
+3. Keep **Maximum CPU performance** checked to get all the power.
+4. Click **Apply and keep after restart**.
 
-Ton réglage est réappliqué tout seul à chaque démarrage et à chaque sortie de veille. L'appli n'a pas besoin de rester ouverte.
+Your setting is re-applied automatically at every startup and every wake from sleep. The app doesn't need to stay open.
 
-**Langue** : boutons **FR / EN** en haut à droite. Au premier lancement, l'appli prend la langue de Windows.
+**Language**: use the **EN / FR** buttons at the top right. The app is in English by default.
 
-## Questions fréquentes
+## FAQ
 
 <details>
-<summary><b>Mon PC est-il compatible ?</b></summary>
+<summary><b>Is my laptop compatible?</b></summary>
 
-Testé sur le **HP Spectre x360 16 (16-aa0xxx, Intel Core Ultra 7 155H, RTX 4050)**.
+Tested on the **HP Spectre x360 16 (16-aa0xxx, Intel Core Ultra 7 155H, RTX 4050)**.
 
-D'autres PC portables HP récents (Spectre, Envy, Omen, Victus…) utilisent la même interface BIOS et devraient fonctionner. L'appli vérifie toute seule au lancement : si ton PC n'est pas compatible, elle te le dit et ne change rien.
+Other recent HP laptops (Spectre, Envy, Omen, Victus…) use the same BIOS interface and should work. The app checks on its own at launch: if your laptop isn't compatible, it tells you and changes nothing.
 
-Ça marche chez toi sur un autre modèle ? [Dis-le dans une issue](https://github.com/NeelTTV/spectre-fan-control/issues) pour qu'on l'ajoute à la liste !
+Does it work on another model? [Let us know in an issue](https://github.com/NeelTTV/spectre-fan-control/issues) so we can add it to the list!
 </details>
 
 <details>
-<summary><b>Comment revenir à la gestion HP d'origine ?</b></summary>
+<summary><b>How do I go back to HP's default fan control?</b></summary>
 
-Choisis **Automatique**, clique sur **Appliquer**, puis **redémarre** le PC. Le BIOS garde la vitesse fixe jusqu'au redémarrage : c'est lui qui fonctionne comme ça, pas l'appli.
+Choose **Automatic**, click **Apply**, then **restart** the laptop. The BIOS keeps the fixed speed until the next restart: that's how the BIOS works, not the app.
 </details>
 
 <details>
-<summary><b>Est-ce que c'est dangereux pour mon PC ?</b></summary>
+<summary><b>Is it dangerous for my laptop?</b></summary>
 
-Non :
-- l'appli utilise les commandes officielles du BIOS HP, les mêmes que les outils des PC gaming HP Omen ;
-- la vitesse ne peut pas descendre sous **3 000 tr/min**, donc un ventilateur ne peut jamais s'arrêter ;
-- le processeur garde ses protections matérielles contre la surchauffe, quoi qu'il arrive.
+No:
+- the app uses HP's official BIOS commands, the same ones used by HP Omen gaming laptop tools;
+- the speed can't go below **3,000 RPM**, so a fan can never stop;
+- the CPU keeps its hardware overheating protection no matter what.
 
-Ventilateurs au maximum = plus de bruit et un peu plus d'usure, comme quand myHP les fait tourner vite.
+Max fans = more noise and a bit more wear, just like when myHP spins them up.
 </details>
 
 <details>
-<summary><b>Pourquoi l'appli demande les droits administrateur ?</b></summary>
+<summary><b>Why does the app need administrator rights?</b></summary>
 
-Windows réserve l'accès au BIOS aux administrateurs. L'appli le demande **une seule fois**, à l'installation. Ensuite elle s'ouvre directement, grâce à une tâche planifiée Windows.
+Windows only lets administrators talk to the BIOS. The app asks **once**, during installation. After that it opens directly, thanks to a Windows scheduled task.
 </details>
 
 <details>
-<summary><b>Comment la désinstaller ?</b></summary>
+<summary><b>How do I uninstall it?</b></summary>
 
-Ouvre Spectre Control, puis clique sur **Désinstaller** en bas à droite. Tout est supprimé : l'appli, les raccourcis, les tâches planifiées et les réglages.
+Open Spectre Control and click **Uninstall** at the bottom right. Everything is removed: the app, the shortcuts, the scheduled tasks and the settings.
 </details>
 
 <details>
-<summary><b>Mon antivirus bloque le fichier</b></summary>
+<summary><b>My antivirus blocks the file</b></summary>
 
-C'est un faux positif fréquent avec les petites applis non signées qui touchent au système. Le code source est entièrement dans ce dépôt, et tu peux compiler l'appli toi-même (voir plus bas).
+That's a common false positive with small unsigned apps that touch system settings. The full source code is in this repository, and you can build the app yourself (see below).
 </details>
 
-## Pour les curieux : comment ça marche
+## Under the hood
 
-Les PC portables HP exposent une interface BIOS via WMI (`root\wmi`, classe `hpqBIntM`). Spectre Control envoie la commande `0x20008` avec :
+HP laptops expose a BIOS interface through WMI (`root\wmi`, class `hpqBIntM`). Spectre Control sends command `0x20008` with:
 
-| Type | Rôle |
+| Type | Purpose |
 |---|---|
-| `0x10` | nombre de ventilateurs |
-| `0x2D` | vitesse actuelle de chaque ventilateur (en centaines de tr/min) |
-| `0x2E` | impose une vitesse à chaque ventilateur (un octet par ventilateur) |
+| `0x10` | number of fans |
+| `0x2D` | current speed of each fan (in hundreds of RPM) |
+| `0x2E` | set a fixed speed for each fan (one byte per fan) |
 
-À l'installation, l'appli :
-- se copie dans `C:\Program Files\SpectreControl` ;
-- crée deux tâches planifiées :
-  - **SpectreControl Apply** (compte SYSTEM) réapplique le réglage au démarrage, à la connexion et en sortie de veille ;
-  - **SpectreControl GUI** ouvre l'interface en administrateur sans fenêtre UAC ;
-- enregistre les réglages dans `C:\ProgramData\SpectreControl\settings.ini`.
+On install, the app:
+- copies itself to `C:\Program Files\SpectreControl`;
+- creates two scheduled tasks:
+  - **SpectreControl Apply** (SYSTEM account) re-applies the setting at startup, sign-in and wake from sleep;
+  - **SpectreControl GUI** opens the app as administrator without a UAC prompt;
+- stores its settings in `C:\ProgramData\SpectreControl\settings.ini`.
 
-L'option *Processeur en performances maximales* règle les paramètres d'alimentation Windows : boost processeur agressif, préférence énergie/performance à 0, aucun cœur parqué.
+The *Maximum CPU performance* option tunes Windows power settings: aggressive processor boost, energy/performance preference at 0, no core parking.
 
-### Compiler soi-même
+### Build it yourself
 
-Aucun outil à installer : le compilateur C# est fourni avec Windows.
+No tools to install: the C# compiler ships with Windows.
 
 ```powershell
 git clone https://github.com/NeelTTV/spectre-fan-control
@@ -130,21 +130,20 @@ cd spectre-fan-control
 powershell -ExecutionPolicy Bypass -File build.ps1
 ```
 
-L'exécutable est créé dans `dist\SpectreControl.exe`.
+The executable is created in `dist\SpectreControl.exe`.
 
 ---
 
-<sub>Projet indépendant, non affilié à HP Inc. « HP », « Spectre » et « myHP » sont des marques de HP Inc. Utilisation à tes risques, sans garantie (licence MIT).</sub>
+<sub>Independent project, not affiliated with HP Inc. "HP", "Spectre" and "myHP" are trademarks of HP Inc. Use at your own risk, without warranty (MIT license).</sub>
 
 <details>
-<summary>🇬🇧 English</summary>
+<summary>🇫🇷 Français</summary>
 
-**Spectre Control** lets you control the fans of HP laptops (tested on the HP Spectre x360 16-aa0xxx) without myHP: maximum fan speed together with full CPU performance, separate speed per fan, and your setting is re-applied at every boot and resume.
+**Spectre Control** permet de contrôler les ventilateurs des PC portables HP (testé sur le HP Spectre x360 16-aa0xxx) sans myHP : ventilateurs au maximum avec le processeur à fond, vitesse séparée pour chaque ventilateur, et le réglage est réappliqué à chaque démarrage et sortie de veille.
 
-1. [Download SpectreControl.exe](https://github.com/NeelTTV/spectre-fan-control/releases/latest/download/SpectreControl.exe) and double-click it.
-2. If SmartScreen warns, click *More info → Run anyway* (the app is free and not code-signed).
-3. Accept the admin prompt and choose *Yes* to install. A shortcut appears on the Desktop and in the Start menu, and you can pin it to the taskbar.
+1. [Télécharge SpectreControl.exe](https://github.com/NeelTTV/spectre-fan-control/releases/latest/download/SpectreControl.exe) et double-clique dessus.
+2. Si Windows affiche un avertissement : *Informations complémentaires → Exécuter quand même* (l'appli est gratuite et non signée).
+3. Accepte la demande administrateur et choisis *Oui* pour installer. Un raccourci apparaît sur le Bureau et dans le menu Démarrer, épinglable à la barre des tâches.
 
-Switch the language with the **FR / EN** buttons (top right). In myHP pick *Performance* once, then in Spectre Control choose *Automatic*, *Fixed speed* (both fans) or *Separate speed for each fan*, and click *Apply and keep after restart*. To return to HP's automatic fan control, pick *Automatic*, apply, and restart. To remove everything, click *Uninstall*.
-
+Passe l'interface en français avec le bouton **FR** (en haut à droite). Dans myHP, choisis *Performance* une fois. Ensuite, dans Spectre Control, choisis *Automatique*, *Vitesse fixe* ou *Réglage séparé*, puis clique sur *Appliquer et garder au redémarrage*. Pour revenir à la gestion HP : *Automatique*, *Appliquer*, puis redémarre. Pour tout supprimer : *Désinstaller*.
 </details>

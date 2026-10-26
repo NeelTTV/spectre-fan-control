@@ -1,4 +1,4 @@
-﻿# Génère src\app.ico (ventilateur blanc sur carré bleu arrondi), plusieurs tailles en PNG
+﻿# Generates src\app.ico (white fan on a rounded blue square), several PNG sizes
 param([string]$Out = (Join-Path $PSScriptRoot '..\src\app.ico'))
 Add-Type -AssemblyName System.Drawing
 
@@ -59,7 +59,7 @@ for ($i = 0; $i -lt $sizes.Count; $i++) {
 foreach ($p in $pngs) { $w.Write($p) }
 $w.Close()
 
-# Aperçu pour le README
+# Preview for the README
 $preview = Join-Path (Split-Path $Out) '..\docs\icon.png'
 New-Item -ItemType Directory -Force (Split-Path $preview) | Out-Null
 [System.IO.File]::WriteAllBytes($preview, (New-FanPng 128))

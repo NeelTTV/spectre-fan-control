@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Management;
 using System.Windows.Forms;
 
@@ -17,7 +18,7 @@ namespace SpectreControl
 
         readonly int fanCount;
         readonly Settings settings;
-        // Le BIOS ne repasse en automatique qu'au redémarrage : on retient si un régime fixe est actif
+        // The BIOS only returns to automatic control after a restart: remember whether a fixed speed is active
         bool manualActive;
 
         readonly Label[] fanCaptions = new Label[2];
@@ -34,7 +35,7 @@ namespace SpectreControl
         readonly CheckBox cbCpu;
         readonly Label status;
         readonly Timer timer;
-        // Dernier message affiché, dans les deux langues, pour le retraduire si on change de langue
+        // Last status message in both languages, so it can be re-translated when the language changes
         string statusFr = "", statusEn = "";
 
         public MainForm(int fanCount)
@@ -44,7 +45,7 @@ namespace SpectreControl
             Lang.English = settings.Language == "en";
             manualActive = Installer.IsRunningInstalled() && settings.Mode != FanMode.Auto;
 
-            // Mise en page en pixels à 96 ppp, mise à l'échelle par WinForms selon l'écran
+            // Layout in pixels at 96 DPI, scaled by WinForms to the screen
             SuspendLayout();
             AutoScaleDimensions = new SizeF(96f, 96f);
             AutoScaleMode = AutoScaleMode.Dpi;
@@ -70,7 +71,7 @@ namespace SpectreControl
             Controls.Add(btnFr);
             Controls.Add(btnEn);
 
-            // Vitesse en direct
+            // Live speed
             for (int i = 0; i < this.fanCount; i++)
             {
                 Panel card = new Panel();
@@ -80,7 +81,7 @@ namespace SpectreControl
                 fanCaptions[i] = MakeLabel("", 14, 10, 180, 20, Font, Muted);
                 card.Controls.Add(fanCaptions[i]);
                 rpmLabels[i] = MakeLabel("…", 12, 30, 190, 40, new Font("Segoe UI Semibold", 18f), Fg);
-                // Fond opaque : un fond transparent est mal redessiné quand le texte change toutes les 2 s
+                // Opaque background: a transparent one redraws badly when the text changes every 2 s
                 rpmLabels[i].BackColor = Card;
                 fanCaptions[i].BackColor = Card;
                 card.Controls.Add(rpmLabels[i]);
@@ -164,7 +165,7 @@ namespace SpectreControl
             if (settings.Mode == FanMode.Auto) rbAuto.Checked = true;
             else if (settings.Mode == FanMode.Separate && this.fanCount > 1) rbSeparate.Checked = true;
             else rbSame.Checked = true;
-            // Après le choix du mode, sinon le mode "même vitesse" écraserait la valeur du ventilateur 2
+            // After choosing the mode, otherwise "same speed" mode would overwrite fan 2's value
             tracks[0].Value = settings.Fan1;
             tracks[1].Value = settings.Fan2;
             rbAuto.CheckedChanged += delegate { UpdateControls(); };
@@ -253,7 +254,7 @@ namespace SpectreControl
 
         static string RpmText(int rpm)
         {
-            return rpm.ToString("N0") + Lang.T(" tr/min", " RPM");
+            return rpm.ToString("N0", CultureInfo.GetCultureInfo(Lang.T("fr-FR", "en-US"))) + Lang.T(" tr/min", " RPM");
         }
 
         void Apply()
@@ -311,7 +312,7 @@ namespace SpectreControl
             }
         }
 
-        // Positions lues après mise à l'échelle DPI : la barre a la même marge à gauche et à droite
+        // Positions read after DPI scaling: the bar has the same margin on the left and right
         static int BarFullWidth(Control bar)
         {
             return bar.Parent.ClientSize.Width - 2 * bar.Left;
