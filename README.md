@@ -48,11 +48,29 @@ Done 🎉 The app is on your **Desktop** and in the **Start menu**. You can **pi
    - **Fixed speed**: both fans at the same speed. The *Quiet*, *Balanced* and *Maximum* buttons set the speed in one click.
    - **Separate speed for each fan**: a different speed for each fan.
 
-   Sliders go from **Minimum** (fan 1 at ~2,100 RPM, fan 2 stopped, like HP at idle) to **Maximum** (~5,100 RPM on the Spectre x360 16).
+   Sliders show the real speed, from **2,100 / 0 RPM** (fan 1 at its firmware floor, fan 2 stopped, like HP at idle) up to **5,100 RPM** on the Spectre x360 16.
 3. Keep **Maximum CPU performance** checked to get all the power.
-4. Click **Apply and keep after restart**.
+4. Click **Apply**.
 
 Your setting is re-applied automatically at every startup and every wake from sleep. The app doesn't need to stay open.
+
+### Profiles
+
+Save your favorite setups as **profiles** and switch between them in one click (for example *Quiet* for office work, *Max performance* for gaming).
+
+- Pick a profile in the list at the top: it becomes active right away (✔).
+- Changes to the mode, sliders and CPU option are saved into the selected profile automatically. Click **Apply** to apply them to the fans.
+- **＋** creates a new profile from what's on screen, **✎** renames the selected profile, **🗑** deletes it.
+
+With **Keep after restart** checked, the active profile is re-applied at every startup and wake from sleep. Uncheck it to let HP take the fans back at the next restart. Three profiles are created on first launch: *Quiet*, *Balanced* and *Max performance*.
+
+**Updates**: the app checks GitHub when it opens. When a new version is out, the button at the bottom left turns blue (*Update vX available*): one click downloads and installs it, keeping your profiles and settings. You can also click **Check for updates** at any time.
+
+**Heat indicator**: the panel under the fans shows the CPU temperature and load, and tells you whether the fans should spin faster (↑), are fine (✓), could slow down (↓), or are already at max while the CPU protects itself (⚠). Uncheck **Show the heat indicator** to hide it.
+
+**Resizable window**: drag the edges or maximize it; the layout adapts, and a small window scrolls.
+
+**Accessibility**: status colors were checked with protanopia, deuteranopia and tritanopia simulations, and every state also has its own symbol, so nothing relies on color alone. Text and buttons meet the WCAG 4.5:1 contrast ratio.
 
 **Language**: use the **EN / FR** buttons at the top right. The app is in English by default.
 
@@ -147,5 +165,5 @@ The executable is created in `dist\SpectreControl.exe`.
 2. Si Windows affiche un avertissement : *Informations complémentaires → Exécuter quand même* (l'appli est gratuite et non signée).
 3. Accepte la demande administrateur et choisis *Oui* pour installer. Un raccourci apparaît sur le Bureau et dans le menu Démarrer, épinglable à la barre des tâches.
 
-Passe l'interface en français avec le bouton **FR** (en haut à droite). Dans myHP, choisis *Performance* une fois. Ensuite, dans Spectre Control, choisis *Automatique*, *Vitesse fixe* ou *Réglage séparé*, puis clique sur *Appliquer et garder au redémarrage*. Pour revenir à la gestion HP : *Automatique*, *Appliquer*, puis redémarre. Pour tout supprimer : *Désinstaller*.
+Passe l'interface en français avec le bouton **FR** (en haut à droite). Dans myHP, choisis *Performance* une fois. Ensuite, dans Spectre Control, choisis *Automatique*, *Vitesse fixe* ou *Réglage séparé*, puis clique sur *Appliquer* (laisse *Garder au redémarrage* coché pour le garder après un redémarrage). Tu peux enregistrer plusieurs réglages comme profils (liste en haut, boutons ＋ ✎ 🗑). Pour revenir à la gestion HP : *Automatique*, *Appliquer*, puis redémarre. Pour tout supprimer : *Désinstaller*.
 </details>

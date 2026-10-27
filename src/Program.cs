@@ -9,8 +9,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("Spectre Control")]
 [assembly: AssemblyProduct("Spectre Control")]
 [assembly: AssemblyDescription("Fan control for HP laptops")]
-[assembly: AssemblyVersion("1.2.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyVersion("1.3.0.0")]
+[assembly: AssemblyFileVersion("1.3.0.0")]
 
 namespace SpectreControl
 {
@@ -22,6 +22,23 @@ namespace SpectreControl
         static int Main(string[] args)
         {
             if (Array.IndexOf(args, "--apply") >= 0) return ApplyAtStartup();
+            if (Array.IndexOf(args, "--install-update") >= 0 && Installer.IsAdmin())
+            {
+                try { return Updater.InstallUpdate(args); }
+                catch (Exception ex) { Settings.Log("Update failed: " + ex.Message); return 1; }
+            }
+            // Unattended: install the latest release if it is newer (admin only)
+            if (Array.IndexOf(args, "--update-now") >= 0 && Installer.IsAdmin())
+            {
+                try
+                {
+                    ReleaseInfo r = Updater.GetLatest();
+                    if (!Updater.IsNewer(r) || r.DownloadUrl == null) return 0;
+                    Updater.LaunchInstaller(Updater.Download(r));
+                    return 0;
+                }
+                catch (Exception ex) { Settings.Log("Update failed: " + ex.Message); return 1; }
+            }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -118,7 +135,13 @@ namespace SpectreControl
         // Run by the SYSTEM task at startup, at sign-in and on wake from sleep
         static int ApplyAtStartup()
         {
-            Settings s = Settings.Load();
+            Settings settings = Settings.Load();
+            if (!settings.KeepAfterRestart)
+            {
+                Settings.Log("Keep after restart is off, leaving fans to HP");
+                return 0;
+            }
+            Profile s = settings.Current;
             if (s.Mode == FanMode.Auto)
             {
                 Settings.Log("Mode=Auto, nothing to do");
@@ -130,7 +153,7 @@ namespace SpectreControl
                 try
                 {
                     s.ApplyFans();
-                    Settings.Log("Mode=" + s.Mode + " Fan1=" + s.Fan1 + " Fan2=" + s.Fan2);
+                    Settings.Log("Profile=\"" + s.Name + "\" Mode=" + s.Mode + " Fan1=" + s.Fan1 + " Fan2=" + s.Fan2);
                     return 0;
                 }
                 catch (Exception ex)
