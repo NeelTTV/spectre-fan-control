@@ -267,6 +267,9 @@ namespace SpectreControl
             timer.Tick += delegate { RefreshRpm(); };
             Shown += delegate
             {
+                Program.EnsureTaskbarButton(Handle);
+                Program.ForceForeground(Handle);
+                Activate();
                 RefreshRpm();
                 timer.Start();
                 CheckForUpdatesAsync(true);

@@ -9,8 +9,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("Spectre Control")]
 [assembly: AssemblyProduct("Spectre Control")]
 [assembly: AssemblyDescription("Fan control for HP laptops")]
-[assembly: AssemblyVersion("1.3.0.0")]
-[assembly: AssemblyFileVersion("1.3.0.0")]
+[assembly: AssemblyVersion("1.3.1.0")]
+[assembly: AssemblyFileVersion("1.3.1.0")]
 
 namespace SpectreControl
 {
@@ -46,7 +46,9 @@ namespace SpectreControl
 
             if (!Installer.IsAdmin())
             {
-                // Installed copy: the scheduled task opens it as admin with no UAC prompt
+                // Installed copy: the scheduled task opens it as admin with no UAC prompt.
+                // We were started by the user, so we may hand our right to take the foreground to the new window.
+                AllowSetForegroundWindow(-1);
                 if (Installer.IsRunningInstalled() && Installer.TryStartElevatedViaTask()) return 0;
                 try
                 {
@@ -167,6 +169,12 @@ namespace SpectreControl
 
         [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr hWnd);
         [DllImport("user32.dll")] static extern bool ShowWindow(IntPtr hWnd, int cmd);
+        [DllImport("user32.dll")] static extern bool AllowSetForegroundWindow(int processId);
+        [DllImport("user32.dll")] static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll")] static extern uint GetWindowThreadProcessId(IntPtr hWnd, IntPtr processId);
+        [DllImport("user32.dll")] static extern bool AttachThreadInput(uint idAttach, uint idAttachTo, bool attach);
+        [DllImport("user32.dll")] static extern bool BringWindowToTop(IntPtr hWnd);
+        [DllImport("kernel32.dll")] static extern uint GetCurrentThreadId();
 
         static void BringExistingToFront()
         {
@@ -176,9 +184,36 @@ namespace SpectreControl
                 if (p.Id != me && p.MainWindowHandle != IntPtr.Zero)
                 {
                     ShowWindow(p.MainWindowHandle, 9);
-                    SetForegroundWindow(p.MainWindowHandle);
+                    ForceForeground(p.MainWindowHandle);
                 }
             }
+        }
+
+        // A window started by Task Scheduler is not allowed to take the foreground and opens behind
+        // the other apps. Sharing input with the current foreground window lifts that restriction.
+        public static void ForceForeground(IntPtr hWnd)
+        {
+            if (GetForegroundWindow() == hWnd) return;
+            uint fgThread = GetWindowThreadProcessId(GetForegroundWindow(), IntPtr.Zero);
+            uint myThread = GetCurrentThreadId();
+            bool attached = fgThread != 0 && fgThread != myThread && AttachThreadInput(myThread, fgThread, true);
+            try
+            {
+                BringWindowToTop(hWnd);
+                SetForegroundWindow(hWnd);
+            }
+            finally
+            {
+                if (attached) AttachThreadInput(myThread, fgThread, false);
+            }
+        }
+
+        // The taskbar misses the first appearance of a window started by Task Scheduler (no button).
+        // Showing it again makes the shell register it.
+        public static void EnsureTaskbarButton(IntPtr hWnd)
+        {
+            ShowWindow(hWnd, 0);
+            ShowWindow(hWnd, 5);
         }
     }
 }
