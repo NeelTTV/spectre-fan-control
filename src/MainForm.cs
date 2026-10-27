@@ -108,7 +108,7 @@ namespace SpectreControl
                 tracks[i] = new TrackBar();
                 tracks[i].Minimum = Settings.MinLevel;
                 tracks[i].Maximum = Settings.MaxLevel;
-                tracks[i].TickFrequency = 3;
+                tracks[i].TickFrequency = 5;
                 tracks[i].LargeChange = 3;
                 tracks[i].Bounds = new Rectangle(18, y + 22, 434, 40);
                 tracks[i].BackColor = Bg;
@@ -249,7 +249,9 @@ namespace SpectreControl
 
         static string LevelText(int level)
         {
-            return level >= Settings.MaxLevel ? Lang.T("Maximum", "Maximum") : RpmText(level * 100);
+            if (level >= Settings.MaxLevel) return Lang.T("Maximum", "Maximum");
+            if (level <= Settings.MinLevel) return Lang.T("Minimum", "Minimum");
+            return RpmText(level * 100);
         }
 
         static string RpmText(int rpm)

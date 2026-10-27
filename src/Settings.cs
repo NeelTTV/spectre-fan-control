@@ -9,8 +9,9 @@ namespace SpectreControl
 
     class Settings
     {
-        // Hundreds of RPM. Below ~30 a fan may stop completely.
-        public const int MinLevel = 30;
+        // Hundreds of RPM. 0 = the BIOS minimum, same as HP's own idle state:
+        // fan 1 stays at ~2,100 RPM (firmware floor) and fan 2 stops.
+        public const int MinLevel = 0;
         public const int MaxLevel = 51;
 
         public static readonly string Dir = Path.Combine(

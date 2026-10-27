@@ -47,6 +47,8 @@ Done 🎉 The app is on your **Desktop** and in the **Start menu**. You can **pi
    - **Automatic**: HP's default fan control.
    - **Fixed speed**: both fans at the same speed. The *Quiet*, *Balanced* and *Maximum* buttons set the speed in one click.
    - **Separate speed for each fan**: a different speed for each fan.
+
+   Sliders go from **Minimum** (fan 1 at ~2,100 RPM, fan 2 stopped, like HP at idle) to **Maximum** (~5,100 RPM on the Spectre x360 16).
 3. Keep **Maximum CPU performance** checked to get all the power.
 4. Click **Apply and keep after restart**.
 
@@ -77,10 +79,10 @@ Choose **Automatic**, click **Apply**, then **restart** the laptop. The BIOS kee
 
 No:
 - the app uses HP's official BIOS commands, the same ones used by HP Omen gaming laptop tools;
-- the speed can't go below **3,000 RPM**, so a fan can never stop;
-- the CPU keeps its hardware overheating protection no matter what.
+- the lowest setting (**Minimum**) is the same state HP's own automatic mode uses at idle: fan 1 at ~2,100 RPM (firmware floor) and fan 2 stopped;
+- the CPU keeps its hardware overheating protection no matter what: if you pick a low speed under heavy load, it slows itself down instead of overheating.
 
-Max fans = more noise and a bit more wear, just like when myHP spins them up.
+Max fans = more noise and a bit more wear, just like when myHP spins them up. Low speeds are great for quiet light work, but switch back to a higher speed (or Automatic) for gaming or heavy workloads.
 </details>
 
 <details>
